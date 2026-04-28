@@ -53,3 +53,37 @@
 | **LangChain** | 15가지 이상 포맷을 단일 인터페이스로 통합, AST 기반 코드 chunking 지원 |
 | **Docling** | PaddleOCR(전체 페이지 이미지화)보다 빠르고 표·캡션 등 구조 정보 보존 |
 | **FastAPI + asyncio** | SSE streaming과 비동기 LLM 호출을 단일 이벤트 루프에서 처리 |
+
+---
+
+## 3. 담당 범위
+
+두 서비스에서 기능 단위로 과제를 받아 기술 조사 후 구현했습니다.
+
+> **팀 구성:** Python 백엔드 개발자 2명 (본인 + 시니어 개발자), Spring 팀 별도. 아래 항목은 본인이 주도적으로 설계·구현한 내용입니다.
+
+### RAG Pipeline
+
+| 담당 기능 | 내용 |
+|----------|------|
+| Reranker 기술 조사 및 적용 | vLLM vs FlashRank 직접 비교 실험 → 추론 속도 **18배** 차이 확인, vLLM 채택 |
+| MMR Selector 성능 개선 | 개별 encode 호출 → 배치 1회 호출로 변경 |
+| PDF 처리 파이프라인 기여 | 텍스트·스캔·복합 PDF 분기 처리 로직에 기능 추가 |
+| 멀티 포맷 문서 처리 | 15가지 이상 포맷별 추출 방식 조사 및 구현 |
+| Web Search 파이프라인 | DuckDuckGo 검색 + Trafilatura 병렬 스크래핑 구현 |
+| LangChain 파일 처리 도입 | 코드·마크업·데이터 파일 처리에 LangChain 로더 적용 |
+| 성능 최적화 | LRU 캐시, 병렬 인코딩, 비동기 배치 reranking 도입 |
+
+→ 상세 내용: [rag/README.md](rag/README.md)
+
+### Chat Backend
+
+| 담당 기능 | 내용 |
+|----------|------|
+| Context Compression | 75% 토큰 임계값 기반 LLM 압축 로직 구현 |
+| Citation 시스템 | 소스 인용 마커 구현 및 ID 버그 수정 |
+| User Memory 자동 추출 | 대화에서 사용자 성향 추출 및 관련성 기반 선택 로직 구현 |
+| Web Search context 통합 | 검색 결과를 SSE stream에 실시간 주입 |
+| 멀티 모델 라우터 | GPT-nano / Qwen / GPT-OSS 단일 인터페이스로 통합 |
+
+→ 상세 내용: [fastapi/README.md](fastapi/README.md)
