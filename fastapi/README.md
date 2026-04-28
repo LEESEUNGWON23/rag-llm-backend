@@ -180,6 +180,8 @@ stream_response = selected_generate_stream_response(model=model, prompt=prompt, 
 
 ## 5. 그 외 기여
 
+- **Citation 시스템:** RAG 검색 결과의 출처를 응답에 인용 마커로 연결하는 로직 구현 및 source ID 매핑 버그 수정
+- **Web Search context 통합:** 웹 검색 결과를 SSE streaming 도중 실시간으로 prompt에 주입하는 로직 구현
 - **Speech-to-Text(STT) API:** 음성을 텍스트로 변환하는 STT 로직 구현 및 테스트 완료 (미배포)
 - **채팅 타이틀 자동 생성:** 대화 내용을 바탕으로 채팅방 제목을 자동 생성하는 로직 구현
 - **System prompt 보호:** system prompt 내용이 LLM 응답에 노출되지 않도록 user/system prompt 분리 처리
